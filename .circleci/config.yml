@@ -9,6 +9,7 @@ jobs:
       - image: cimg/node:15.5.0
     steps:
       - checkout
+      - run: echo "I AM " "$PWD"
       - run:
           name: Getting Node Version
           command: node --version
