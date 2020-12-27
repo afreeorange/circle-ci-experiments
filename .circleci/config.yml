@@ -6,7 +6,7 @@ orbs:
 jobs:
   setup-yarn:
     docker:
-      - image: cimg/node:15.5.0
+      - image: cimg/node:14.15.2
     steps:
       - checkout
       - restore_cache:
@@ -16,7 +16,10 @@ jobs:
             - yarn-packages-v1-{{ .Branch }}-
             - yarn-packages-v1-
 
-      - run: yarn
+      - run:
+          name: Installing dependencies
+          command: yarn
+
       - save_cache:
           paths:
             - ~/.cache/yarn
