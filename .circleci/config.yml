@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Getting Yarn Version
           command: yarn --version
-     - aws-s3/sync:
+      - aws-s3/sync:
           from: $CIRCLE_WORKING_DIRECTORY/
           to: 's3://lolzil.la/HAHA/'
           arguments: |
