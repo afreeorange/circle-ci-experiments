@@ -9,7 +9,20 @@ jobs:
       - image: cimg/node:15.5.0
     steps:
       - checkout
-      - run: echo "I AM " "$PWD"
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
+
+      - run: yarn
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
+      - run: echo "I AM " `pwd`
       - run:
           name: Getting Node Version
           command: node --version
@@ -20,11 +33,12 @@ jobs:
           aws-region: AWS_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: $CIRCLE_WORKING_DIRECTORY/
-          to: 's3://lolzil.la/HAHA/'
+          from: ./
+          to: "s3://lolzil.la/HAHA/"
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
+
 
 workflows:
   log:
