@@ -17,4 +17,4 @@ jobs:
 workflows:
   log:
     jobs:
-      - install-node-example
+      - setup-yarn
