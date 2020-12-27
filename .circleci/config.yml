@@ -16,6 +16,9 @@ jobs:
           name: Getting Yarn Version
           command: yarn --version
       - aws-s3/sync:
+          aws-region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: $CIRCLE_WORKING_DIRECTORY/
           to: 's3://lolzil.la/HAHA/'
           arguments: |
