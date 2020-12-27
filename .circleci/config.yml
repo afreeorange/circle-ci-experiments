@@ -6,17 +6,21 @@ orbs:
 jobs:
   setup-yarn:
     docker:
-      - image: circleci/node:fermium
+      - image: cimg/node:15.5.0
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
       - run:
           name: Getting Node Version
           command: node --version
       - run:
           name: Getting Yarn Version
           command: yarn --version
+     - aws-s3/sync:
+          from: $CIRCLE_WORKING_DIRECTORY/
+          to: 's3://lolzil.la/HAHA/'
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
 
 workflows:
   log:
