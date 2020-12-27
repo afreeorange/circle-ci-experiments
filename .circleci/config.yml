@@ -1,18 +1,22 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.1.0
   aws-s3: circleci/aws-s3@2.0.0
 
 jobs:
   setup-yarn:
     docker:
-      - image: "cimg/base:stable"
+      - image: circleci/node:fermium
     steps:
       - checkout
       - node/install:
           install-yarn: true
-      - run: node --version
+      - run:
+          name: Getting Node Version
+          command: node --version
+      - run:
+          name: Getting Yarn Version
+          command: yarn --version
 
 workflows:
   log:
